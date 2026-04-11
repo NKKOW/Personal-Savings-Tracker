@@ -1,0 +1,161 @@
+/* --- BAZOWE ZMIENNE I RESET --- */
+:root {
+    --bg-color: #f7f8fa;
+    --card-bg: #ffffff;
+    --text-main: #052049;
+    --text-muted: #6b7280;
+    --primary-blue: #004ba0;
+    --progress-green: #0b8a00;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+}
+
+/* Ograniczenie szerokości na dużych ekranach */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- NAWIGACJA --- */
+.navbar {
+    background-color: var(--card-bg);
+    border-bottom: 1px solid #e5e7eb;
+    padding: 15px 0;
+}
+
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 20px;
+    color: var(--primary-blue);
+}
+
+.btn-primary {
+    background-color: var(--primary-blue);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* --- KARTA PODSUMOWANIA --- */
+.summary-card {
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 8px;
+    margin-top: 30px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.summary-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+}
+
+.summary-amount {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+/* --- SEKCJA CELÓW --- */
+.goals-section {
+    margin-top: 40px;
+}
+
+.section-title {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+/* KARTY CELÓW - DOMYŚLNIE DESKTOP (3 KOLUMNY) */
+.goals-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.goal-card {
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.badge {
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.badge-travel { background-color: #e0e7ff; color: #3730a3; }
+.badge-tech { background-color: #ffedd5; color: #9a3412; }
+
+.card-amounts {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+/* PASEK POSTĘPU */
+.progress-track {
+    background-color: #e5e7eb;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 4px;
+}
+
+.card-footer {
+    text-align: right;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--progress-green);
+}
+
+/* --- RWD: WERSJA MOBILNA --- */
+@media (max-width: 768px) {
+    .goals-grid {
+        /* Na telefonach karty ustawiają się jedna pod drugą */
+        grid-template-columns: 1fr; 
+    }
+    
+    .nav-content {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
