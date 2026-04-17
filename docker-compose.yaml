@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  db:
+    build: ./docker/db
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: user
+      POSTGRES_DB: savings_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./docker/db/init:/docker-entrypoint-initdb.d
+
+  php:
+    build: ./docker/php
+    volumes:
+      - .:/app
+
+  nginx:
+    build: ./docker/nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/app
+    depends_on:
+      - php
