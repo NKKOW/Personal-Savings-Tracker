@@ -8,6 +8,10 @@ class Routing {
             "controller" => "SecurityController",
             "action" => "login"
         ],
+        "register" => [
+            "controller" => "SecurityController",
+            "action" => "register"
+        ],
         "dashboard" => [
             "controller" => "DashboardController",
             "action" => "index"

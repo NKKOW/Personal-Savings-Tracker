@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <?php include __DIR__ . '/partials/head.html'; ?>
+</head>
+<body>
+    <div class="container">
+        <form action="/register" method="POST">
+            <h1>SavingsZen</h1>
+            <h2>Załóż konto</h2>
+            <div>
+                <?php if(isset($messages)) echo $messages; ?>
+            </div>
+            <input name="email" type="text" placeholder="Twój e-mail" required>
+            <input name="password" type="password" placeholder="Hasło" required>
+            <input name="password_repeat" type="password" placeholder="Powtórz hasło" required>
+            <button type="submit" class="btn-primary">Zarejestruj się</button>
+            <p style="margin-top: 15px; font-size: 14px;">Masz już konto? <a href="/login">Zaloguj się</a></p>
+        </form>
+    </div>
+</body>
+</html>
