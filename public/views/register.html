@@ -4,19 +4,92 @@
     <?php include __DIR__ . '/partials/head.html'; ?>
 </head>
 <body>
-    <div class="container">
-        <form action="/register" method="POST">
-            <h1>SavingsZen</h1>
-            <h2>Załóż konto</h2>
-            <div>
-                <?php if(isset($messages)) echo $messages; ?>
+    <div class="auth-layout">
+        <main class="auth-container">
+            <div class="auth-header">
+                <div class="auth-logo-box">
+                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">savings</span>
+                </div>
+                <h1 class="auth-title">SavingsZen</h1>
+                <p class="auth-subtitle">Start your journey to financial clarity and peace of mind.</p>
             </div>
-            <input name="email" type="text" placeholder="Twój e-mail" required>
-            <input name="password" type="password" placeholder="Hasło" required>
-            <input name="password_repeat" type="password" placeholder="Powtórz hasło" required>
-            <button type="submit" class="btn-primary">Zarejestruj się</button>
-            <p style="margin-top: 15px; font-size: 14px;">Masz już konto? <a href="/login">Zaloguj się</a></p>
-        </form>
+
+            <div class="auth-card">
+                <?php if(isset($messages)): ?>
+                    <div class="alert-error">
+                        <?php echo $messages; ?>
+                    </div>
+                <?php endif; ?>
+
+                <form action="/register" method="POST" id="registrationForm">
+                    <div class="form-group">
+                        <label class="form-label" for="firstName">First Name</label>
+                        <div class="input-wrapper">
+                            <span class="material-symbols-outlined input-icon">person</span>
+                            <input class="form-input" id="firstName" name="firstName" placeholder="John" required type="text">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="lastName">Last Name</label>
+                        <div class="input-wrapper">
+                            <span class="material-symbols-outlined input-icon">person</span>
+                            <input class="form-input" id="lastName" name="lastName" placeholder="Doe" required type="text">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email address</label>
+                        <div class="input-wrapper">
+                            <span class="material-symbols-outlined input-icon">mail</span>
+                            <input class="form-input" id="email" name="email" placeholder="name@example.com" required type="email">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="password">Password</label>
+                        <div class="input-wrapper">
+                            <span class="material-symbols-outlined input-icon">lock</span>
+                            <input class="form-input" id="password" name="password" placeholder="Min. 8 characters" required type="password">
+                            <button class="input-action" onclick="togglePassword('password', 'eye-icon-password')" type="button">
+                                <span class="material-symbols-outlined" id="eye-icon-password">visibility</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="confirm_password">Confirm Password</label>
+                        <div class="input-wrapper">
+                            <span class="material-symbols-outlined input-icon">lock_reset</span>
+                            <input class="form-input" id="confirm_password" name="password_repeat" placeholder="Repeat your password" required type="password">
+                            <button class="input-action" onclick="togglePassword('confirm_password', 'eye-icon-confirm')" type="button">
+                                <span class="material-symbols-outlined" id="eye-icon-confirm">visibility</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" type="submit">
+                        Create Account
+                    </button>
+                </form>
+                
+                <div class="auth-footer">
+                    <p>Already have an account? <a class="auth-link" href="/login">Log in</a></p>
+                </div>
+            </div>
+
+            <div class="trust-badges">
+                <div class="trust-row">
+                    <div class="trust-item">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+                        <span>Bank-grade 256-bit SSL encryption</span>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
+
+    <script src="/public/scripts/main.js"></script>
+    <script src="/public/scripts/validate.js"></script>
 </body>
 </html>

@@ -1,19 +1,74 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Logowanie - SavingsZen</title>
-    <link rel="stylesheet" href="/public/styles/main.css">
+    <?php include __DIR__ . '/partials/head.html'; ?>
 </head>
 <body>
-    <div class="container">
-        <form action="/dashboard" method="POST">
-            <h1>SavingsZen</h1>
-            <input name="email" type="text" placeholder="email@email.com" required>
-            <input name="password" type="password" placeholder="Hasło" required>
-            <button type="submit" class="btn-primary">Zaloguj się</button>
-        </form>
+    <div class="auth-layout">
+        <main class="auth-container">
+            <div class="auth-header">
+                <div class="auth-logo-box">
+                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">savings</span>
+                </div>
+                <h1 class="auth-title">SavingsZen</h1>
+                <p class="auth-subtitle">Find your financial clarity today.</p>
+            </div>
+            
+            <div class="auth-card">
+                <?php if(isset($messages)): ?>
+                    <div class="alert-error">
+                        <?php echo $messages; ?>
+                    </div>
+                <?php endif; ?>
+
+                <form action="/login" method="POST">
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email address</label>
+                        <div class="input-wrapper">
+                            <span class="material-symbols-outlined input-icon">mail</span>
+                            <input class="form-input" id="email" name="email" placeholder="name@company.com" required type="email">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="password">Password</label>
+                        <div class="input-wrapper">
+                            <span class="material-symbols-outlined input-icon">lock</span>
+                            <input class="form-input" id="password" name="password" placeholder="••••••••" required type="password">
+                            <button class="input-action" onclick="togglePassword('password', 'eye-icon-password')" type="button">
+                                <span class="material-symbols-outlined" id="eye-icon-password">visibility</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <button class="btn-primary" type="submit">
+                        Log In <span class="material-symbols-outlined">arrow_forward</span>
+                    </button>
+                </form>
+                
+                <div class="auth-footer">
+                    <p>New to SavingsZen? <a class="auth-link" href="/register">Create an account</a></p>
+                </div>
+            </div>
+            
+            <div class="trust-badges">
+                <div class="trust-row">
+                    <div class="trust-item">
+                        <span class="material-symbols-outlined">security</span>
+                        <span>Bank-Grade Security</span>
+                    </div>
+                    <div class="trust-item">
+                        <span class="material-symbols-outlined">encrypted</span>
+                        <span>256-bit AES</span>
+                    </div>
+                </div>
+                <div class="trust-copyright">
+                    © 2026 SavingsZen Financial Corp. All rights reserved.
+                </div>
+            </div>
+        </main>
     </div>
+
+    <script src="/public/scripts/main.js"></script>
 </body>
 </html>

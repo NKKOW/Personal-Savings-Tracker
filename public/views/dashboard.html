@@ -1,25 +1,21 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - SavingsZen</title>
-    <link rel="stylesheet" href="/public/styles/main.css">
+    <?php include __DIR__ . '/partials/head.html'; ?>
 </head>
 <body>
     <header class="navbar">
-        <div class="container nav-content">
+        <div class="nav-content">
             <h1 class="logo">SavingsZen</h1>
-            <button class="btn-primary">Add New Goal</button>
+            <a href="/logout" class="btn-primary" style="width: auto; padding: 10px 20px; font-size: 14px;">Log Out</a>
         </div>
     </header>
 
-    <main class="container">
+    <main class="main-container">
         <section class="summary-card">
             <p class="summary-label">TOTAL SAVINGS</p>
             <h2 class="summary-amount">4,850.00 PLN</h2>
         </section>
     </main>
-    <script src="/public/scripts/main.js"></script>
 </body>
 </html>

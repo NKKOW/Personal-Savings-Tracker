@@ -1,12 +1,27 @@
 <?php
 
 class AppController {
+    public function __construct() {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+    }
+
     protected function isGet(): bool {
         return $_SERVER["REQUEST_METHOD"] === 'GET';
     }
 
     protected function isPost(): bool {
         return $_SERVER["REQUEST_METHOD"] === 'POST';
+    }
+
+    protected function isLoggedIn(): bool {
+        if (!isset($_SESSION['user_id'])) {
+            $url = "http://$_SERVER[HTTP_HOST]";
+            header("Location: {$url}/login");
+            return false;
+        }
+        return true;
     }
     
     protected function render(string $template = null, array $variables = []) {

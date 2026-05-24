@@ -4,6 +4,12 @@ require_once __DIR__ . '/../repositories/UsersRepository.php';
 
 class SecurityController extends AppController {
     public function login() {
+        if (isset($_SESSION['user_id'])) {
+            $url = "http://$_SERVER[HTTP_HOST]";
+            header("Location: {$url}/dashboard");
+            return;
+        }
+
         if (!$this->isPost()) {
             return $this->render('login');
         }
@@ -26,7 +32,6 @@ class SecurityController extends AppController {
             return $this->render('login', ['messages' => 'Błędne hasło']);
         }
 
-        session_start();
         $_SESSION['user_id'] = $user['id'];
         
         $url = "http://$_SERVER[HTTP_HOST]";
@@ -39,8 +44,10 @@ class SecurityController extends AppController {
             $email = trim($_POST['email'] ?? '');
             $password = $_POST['password'] ?? '';
             $passwordRepeat = $_POST['password_repeat'] ?? '';
+            $firstName = trim($_POST['firstName'] ?? '');
+            $lastName = trim($_POST['lastName'] ?? '');
 
-            if (empty($email) || empty($password) || empty($passwordRepeat)) {
+            if (empty($email) || empty($password) || empty($passwordRepeat) || empty($firstName) || empty($lastName)) {
                 return $this->render('register', ['messages' => 'Wypełnij wszystkie pola']);
             }
 
@@ -56,11 +63,22 @@ class SecurityController extends AppController {
             }
 
             $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-            $userRepository->createUser($email, $hashedPassword);
+            $username = $firstName;
+            $fullName = $firstName . ' ' . $lastName;
+
+            $userRepository->createUser($username, $email, $hashedPassword, $fullName);
 
             return $this->render('login', ['messages' => 'Rejestracja udana. Możesz się zalogować.']);
         }
 
         return $this->render("register");
+    }
+
+    public function logout() {
+        session_unset();
+        session_destroy();
+        $url = "http://$_SERVER[HTTP_HOST]";
+        header("Location: {$url}/login");
+        return;
     }
 }

@@ -1,0 +1,31 @@
+:root {
+    --primary: #00346f;
+    --primary-container: #004a99;
+    --on-primary: #ffffff;
+    --surface: #ffffff;
+    --background: #f8f9fa;
+    --outline: #737783;
+    --outline-variant: #c2c6d3;
+    --error: #ba1a1a;
+    --error-bg: #ffdad6;
+    --text-main: #191c1d;
+    --text-variant: #424751;
+    --font-main: 'Inter', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--background);
+    font-family: var(--font-main);
+    color: var(--text-main);
+    -webkit-font-smoothing: antialiased;
+}
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
