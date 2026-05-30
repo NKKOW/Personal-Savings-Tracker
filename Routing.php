@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/src/controllers/SecurityController.php';
 require_once __DIR__ . '/src/controllers/DashboardController.php';
+require_once __DIR__ . '/src/controllers/UsersController.php';
 
 class Routing {
     public static $routes = [
@@ -19,6 +20,14 @@ class Routing {
         "dashboard" => [
             "controller" => "DashboardController",
             "action" => "index"
+        ],
+        "search" => [
+            "controller" => "UsersController",
+            "action" => "search"
+        ],
+        "delete-user" => [
+            "controller" => "UsersController",
+            "action" => "delete"
         ],
         "" => [
             "controller" => "SecurityController",
