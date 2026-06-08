@@ -7,19 +7,13 @@
     <title><?= $title; ?></title>
 </head>
 <body class="index-page">
-    <header class="navbar">
-        <div class="nav-content">
-            <h1 class="logo">SavingsZen</h1>
-            <a href="/logout" class="btn-primary" style="width: auto; padding: 10px 20px; font-size: 14px;">Log Out</a>
-        </div>
-    </header>
+    
+    <?php include __DIR__ . '/partials/nav.html'; ?>
 
     <div class="index-shell container">
         <main class="index-main">
             <section class="index-hero">
-                <span class="eyebrow">Users</span>
-                <h1>Index</h1>
-                <p>Lista zarejestrowanych użytkowników w aplikacji.</p>
+                <h3>Lista zarejestrowanych użytkowników</h3>
             </section>
 
             <div class="search-bar">
@@ -54,7 +48,7 @@
             <section class="aside-panel">
                 <span class="eyebrow">Info</span>
                 <h2>Panel boczny</h2>
-                <p>Tu możesz później dodać statystyki, filtry albo skróty do akcji administracyjnych.</p>
+                <p>Wkrótce</p>
             </section>
         </aside>
 

@@ -6,7 +6,8 @@ class SecurityController extends AppController {
     public function login() {
         if (isset($_SESSION['user_id'])) {
             $url = "http://$_SERVER[HTTP_HOST]";
-            header("Location: {$url}/dashboard");
+            $redirect = ($_SESSION['user_role'] === 'admin') ? 'admin' : 'dashboard';
+            header("Location: {$url}/{$redirect}");
             return;
         }
 
@@ -33,9 +34,11 @@ class SecurityController extends AppController {
         }
 
         $_SESSION['user_id'] = $user['id'];
+        $_SESSION['user_role'] = ($user['email'] === 'admin@savingszen.local') ? 'admin' : 'user';
         
         $url = "http://$_SERVER[HTTP_HOST]";
-        header("Location: {$url}/dashboard");
+        $redirect = ($_SESSION['user_role'] === 'admin') ? 'admin' : 'dashboard';
+        header("Location: {$url}/{$redirect}");
         return;
     }
 

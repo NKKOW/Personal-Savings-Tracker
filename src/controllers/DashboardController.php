@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ . '/AppController.php';
-require_once __DIR__ . '/../repositories/UsersRepository.php';
 
 class DashboardController extends AppController {
     public function index() {
@@ -8,10 +7,12 @@ class DashboardController extends AppController {
             return;
         }
         
-        $title = "SavingsZen - Users Index";
-        $usersRepository = new UsersRepository();
-        $users = $usersRepository->getUsers();
-
-        return $this->render("index", ["title" => $title, "users" => $users]);
+        $title = "SavingsZen - Dashboard";
+        $balance = "0.00"; // Z czasem pobierzemy to z bazy
+        
+        return $this->render("dashboard", [
+            "title" => $title, 
+            "balance" => $balance
+        ]);
     }
 }

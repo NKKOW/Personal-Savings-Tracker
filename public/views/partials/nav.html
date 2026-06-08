@@ -1,6 +1,17 @@
 <header class="navbar">
-    <div class="container nav-content">
-        <h1 class="logo">SavingsZen</h1>
-        <button class="btn-primary">Add New Goal</button>
+    <div class="nav-content">
+        <a href="/dashboard" class="logo" style="text-decoration: none;">SavingsZen</a>
+        
+        <div style="display: flex; gap: 16px; align-items: center;">
+            
+            <?php if(isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
+                <a href="/dashboard" style="text-decoration: none; font-size: 14px; font-weight: 600; color: var(--text-main); padding: 10px 20px; border: 1px solid var(--outline-variant); border-radius: 8px; background-color: var(--surface); display: inline-block;">Dashboard</a>
+                
+                <a href="/admin" style="text-decoration: none; font-size: 14px; font-weight: 600; color: var(--text-main); padding: 10px 20px; border: 1px solid var(--outline-variant); border-radius: 8px; background-color: var(--surface); display: inline-block;">Admin Panel</a>
+            <?php endif; ?>
+
+            <a href="/logout" class="btn-primary" style="width: auto; padding: 10px 20px; font-size: 14px; margin: 0;">Log Out</a>
+            
+        </div>
     </div>
 </header>

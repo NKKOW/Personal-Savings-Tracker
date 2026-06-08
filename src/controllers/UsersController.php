@@ -3,7 +3,18 @@ require_once __DIR__ . '/AppController.php';
 require_once __DIR__ . '/../repositories/UsersRepository.php';
 
 class UsersController extends AppController {
+    private function isAdmin(): bool {
+        return isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
+    }
+
     public function search() {
+
+        if (!$this->isAdmin()) {
+            http_response_code(403);
+            echo json_encode(["error" => "Forbidden"]);
+            return;
+        }
+
         $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
 
         if ($contentType === "application/json") {

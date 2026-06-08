@@ -2,19 +2,24 @@
 <html lang="pl">
 <head>
     <?php include __DIR__ . '/partials/head.html'; ?>
+    <link rel="stylesheet" href="/public/styles/index.css" />
 </head>
-<body>
-    <header class="navbar">
-        <div class="nav-content">
-            <h1 class="logo">SavingsZen</h1>
-            <a href="/logout" class="btn-primary" style="width: auto; padding: 10px 20px; font-size: 14px;">Log Out</a>
-        </div>
-    </header>
+<body class="index-page">
+    <?php include __DIR__ . '/partials/nav.html'; ?>
 
     <main class="main-container">
+        <section class="summary-card" style="margin-bottom: 24px;">
+            <p class="summary-label">DOSTĘPNE SALDO</p>
+            <h2 class="summary-amount"><?= $balance ?> PLN</h2>
+        </section>
+        
         <section class="summary-card">
-            <p class="summary-label">TOTAL SAVINGS</p>
-            <h2 class="summary-amount">4,850.00 PLN</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h2 style="font-size: 20px; color: var(--text-main);">Twoje Cele</h2>
+                <button class="btn-primary" style="width: auto; padding: 10px 20px; font-size: 14px;">+ Dodaj Cel</button>
+            </div>
+            
+            <p style="color: var(--text-variant); font-size: 14px;">Nie masz jeszcze żadnych celów oszczędnościowych.</p>
         </section>
     </main>
 </body>
