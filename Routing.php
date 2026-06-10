@@ -3,41 +3,21 @@ require_once __DIR__ . '/src/controllers/SecurityController.php';
 require_once __DIR__ . '/src/controllers/DashboardController.php';
 require_once __DIR__ . '/src/controllers/UsersController.php';
 require_once __DIR__ . '/src/controllers/AdminController.php';
+require_once __DIR__ . '/src/controllers/GoalController.php';
 
 class Routing {
     public static $routes = [
-        "login" => [
-            "controller" => "SecurityController",
-            "action" => "login"
-        ],
-        "register" => [
-            "controller" => "SecurityController",
-            "action" => "register"
-        ],
-        "logout" => [
-            "controller" => "SecurityController",
-            "action" => "logout"
-        ],
-        "dashboard" => [
-            "controller" => "DashboardController",
-            "action" => "index"
-        ],
-        "admin" => [
-            "controller" => "AdminController",
-            "action" => "index"
-        ],
-        "search" => [
-            "controller" => "UsersController",
-            "action" => "search"
-        ],
-        "delete-user" => [
-            "controller" => "UsersController",
-            "action" => "delete"
-        ],
-        "" => [
-            "controller" => "SecurityController",
-            "action" => "login"
-        ]
+        "login" => ["controller" => "SecurityController", "action" => "login"],
+        "register" => ["controller" => "SecurityController", "action" => "register"],
+        "logout" => ["controller" => "SecurityController", "action" => "logout"],
+        "dashboard" => ["controller" => "DashboardController", "action" => "index"],
+        "admin" => ["controller" => "AdminController", "action" => "index"],
+        "search" => ["controller" => "UsersController", "action" => "search"],
+        "delete-user" => ["controller" => "UsersController", "action" => "delete"],
+        "add-goal" => ["controller" => "GoalController", "action" => "addGoal"],
+        "add-money" => ["controller" => "GoalController", "action" => "addMoney"],
+        "update-balance" => ["controller" => "GoalController", "action" => "updateBalance"],
+        "" => ["controller" => "SecurityController", "action" => "login"]
     ];
 
     public static function run(string $path) {
@@ -53,3 +33,5 @@ class Routing {
         }
     }
 }
+
+

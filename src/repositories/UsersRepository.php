@@ -54,4 +54,26 @@ class UsersRepository extends Repository {
 
         return $query->rowCount() > 0;
     }
+
+    public function getUserById(int $id) {
+        $stmt = $this->database->connect()->prepare('
+            SELECT id, email, username, full_name, balance, is_active FROM users WHERE id = :id
+        ');
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function updateBalance(int $userId, float $amount): bool {
+        try {
+            $stmt = $this->database->connect()->prepare('
+                UPDATE users SET balance = balance + :amount WHERE id = :id
+            ');
+            $stmt->execute(['amount' => $amount, 'id' => $userId]);
+            return true;
+        } catch (PDOException $e) {
+            return false; 
+        }
+    }
 }
