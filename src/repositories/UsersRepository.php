@@ -56,7 +56,24 @@ class UsersRepository extends Repository {
     }
 
     public function getUserById(int $id) {
-        $stmt = $this->database->connect()->prepare('
+        $pdo = $this->database->connect();
+
+        try {
+            $pdo->exec("ALTER TABLE users ADD COLUMN IF NOT EXISTS balance NUMERIC(10, 2) DEFAULT 0.00 CHECK (balance >= 0)");
+            
+            $pdo->exec("CREATE TABLE IF NOT EXISTS goals (
+                id SERIAL PRIMARY KEY,
+                user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+                title VARCHAR(255) NOT NULL,
+                goal_type VARCHAR(20) NOT NULL DEFAULT 'fixed',
+                target_amount NUMERIC(10, 2),
+                current_amount NUMERIC(10, 2) DEFAULT 0.00 CHECK (current_amount >= 0),
+                created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+            )");
+        } catch (PDOException $e) {
+        }
+
+        $stmt = $pdo->prepare('
             SELECT id, email, username, full_name, balance, is_active FROM users WHERE id = :id
         ');
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);

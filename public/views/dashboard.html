@@ -1,26 +1,80 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
     <?php include __DIR__ . '/partials/head.html'; ?>
     <link rel="stylesheet" href="/public/styles/index.css" />
+    <link rel="stylesheet" href="/public/styles/dashboard.css" />
+    <script src="/public/scripts/dashboard.js" defer></script>
+    <title><?= $title; ?></title>
 </head>
 <body class="index-page">
     <?php include __DIR__ . '/partials/nav.html'; ?>
 
-    <main class="main-container">
-        <section class="summary-card" style="margin-bottom: 24px;">
-            <p class="summary-label">DOSTĘPNE SALDO</p>
-            <h2 class="summary-amount"><?= $balance ?> PLN</h2>
-        </section>
-        
-        <section class="summary-card">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                <h2 style="font-size: 20px; color: var(--text-main);">Twoje Cele</h2>
-                <button class="btn-primary" style="width: auto; padding: 10px 20px; font-size: 14px;">+ Dodaj Cel</button>
-            </div>
-            
-            <p style="color: var(--text-variant); font-size: 14px;">Nie masz jeszcze żadnych celów oszczędnościowych.</p>
-        </section>
-    </main>
+    <div class="container">
+        <main class="index-main dashboard-container">
+            <section style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; padding: 32px; background: var(--surface); border-radius: 12px; border: 1px solid var(--outline-variant); box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                <div>
+                    <p style="font-size: 12px; font-weight: 600; color: var(--text-variant); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px;">Dostępne środki (wolne)</p>
+                    <h2 style="font-size: 36px; font-weight: 700; color: var(--text-main); margin: 0;"><?= $freeBalance ?> PLN</h2>
+                    <p style="font-size: 13px; color: var(--text-variant); margin-top: 8px;">Saldo ogólne (wraz z celami): <strong><?= $totalBalance ?> PLN</strong></p>
+                </div>
+                <button type="button" data-modal-target="balanceModal" class="btn-primary btn-icon">
+                    <span class="material-symbols-outlined" style="font-size: 20px;">add</span> Wpłać na konto
+                </button>
+            </section>
+
+            <section>
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--outline-variant); padding-bottom: 12px;">
+                    <h2 style="font-size: 24px; margin: 0;">Twoje Cele</h2>
+                    <button type="button" data-modal-target="addGoalModal" class="btn-primary btn-icon">
+                        <span class="material-symbols-outlined" style="font-size: 20px;">add</span> Nowy Cel
+                    </button>
+                </div>
+
+                <div class="goals-grid">
+                    <?php if(empty($goals)): ?>
+                        <p style="color: var(--text-variant); grid-column: 1 / -1;">Nie masz jeszcze żadnych celów oszczędnościowych. Kliknij "Nowy Cel", aby zacząć!</p>
+                    <?php else: ?>
+                        <?php foreach($goals as $goal): ?>
+                            <?php 
+                                $percentage = 0;
+                                if ($goal['goal_type'] === 'fixed' && $goal['target_amount'] > 0) {
+                                    $percentage = min(100, round(($goal['current_amount'] / $goal['target_amount']) * 100));
+                                }
+                            ?>
+                            <article class="goal-card">
+                                <div class="goal-header">
+                                    <h3><?= htmlspecialchars($goal['title']) ?></h3>
+                                    <span class="goal-tag <?= $goal['goal_type'] ?>"><?= $goal['goal_type'] === 'fixed' ? 'Stały' : 'Dodatkowy' ?></span>
+                                </div>
+                                
+                                <div class="goal-amounts">
+                                    <span style="font-weight: 600; color: var(--text-main);"><?= number_format($goal['current_amount'], 2) ?></span>
+                                    <?php if($goal['goal_type'] === 'fixed'): ?>
+                                        <span><?= number_format($goal['target_amount'], 2) ?></span>
+                                    <?php endif; ?>
+                                </div>
+
+                                <?php if($goal['goal_type'] === 'fixed'): ?>
+                                    <div class="progress-track">
+                                        <div class="progress-fill" style="width: <?= $percentage ?>%;"></div>
+                                    </div>
+                                    <div class="progress-text"><?= $percentage ?>%</div>
+                                <?php else: ?>
+                                    <div style="height: 38px;"></div> 
+                                <?php endif; ?>
+
+                                <button type="button" data-modal-target="goalDepositModal" data-goal-id="<?= $goal['id'] ?>" data-goal-name="<?= htmlspecialchars($goal['title']) ?>" class="btn-primary btn-icon btn-small" style="background: var(--surface); color: var(--text-main); border: 1px solid var(--outline-variant);">
+                                    <span class="material-symbols-outlined" style="font-size: 16px;">add</span> Wpłać
+                                </button>
+                            </article>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <?php include __DIR__ . '/partials/modals.html'; ?>
 </body>
 </html>

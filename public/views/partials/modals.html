@@ -1,0 +1,63 @@
+<div id="balanceModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Zasil konto główne</h2>
+            <button class="close-btn" type="button" data-modal-close="balanceModal">&times;</button>
+        </div>
+        <form action="/update-balance" method="POST">
+            <div class="form-group">
+                <label style="font-size: 13px; color: var(--text-variant);">Kwota (PLN)</label>
+                <input type="number" step="0.01" name="amount" placeholder="np. 500.00" required>
+            </div>
+            <button type="submit" class="btn-primary" style="width: 100%; margin-top: 16px;">Zatwierdź wpłatę</button>
+        </form>
+    </div>
+</div>
+
+<div id="addGoalModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Dodaj nowy cel</h2>
+            <button class="close-btn" type="button" data-modal-close="addGoalModal">&times;</button>
+        </div>
+        <form action="/add-goal" method="POST">
+            <div class="form-group">
+                <label style="font-size: 13px; color: var(--text-variant);">Nazwa celu</label>
+                <input type="text" name="title" placeholder="np. Nowy Laptop" required>
+            </div>
+            <div class="form-group">
+                <label style="font-size: 13px; color: var(--text-variant);">Typ celu</label>
+                <select name="goal_type" id="goalTypeSelect">
+                    <option value="fixed">Cel stały (z limitem)</option>
+                    <option value="additional">Cel dodatkowy (skarbonka)</option>
+                </select>
+            </div>
+            <div class="form-group" id="targetAmountGroup">
+                <label style="font-size: 13px; color: var(--text-variant);">Kwota docelowa (PLN)</label>
+                <input type="number" step="0.01" name="target_amount" placeholder="np. 6000.00">
+            </div>
+            <div class="form-group">
+                <label style="font-size: 13px; color: var(--text-variant);">Pierwsza wpłata z salda (opcjonalnie)</label>
+                <input type="number" step="0.01" name="initial_amount" placeholder="np. 100.00">
+            </div>
+            <button type="submit" class="btn-primary" style="width: 100%; margin-top: 16px;">Utwórz cel</button>
+        </form>
+    </div>
+</div>
+
+<div id="goalDepositModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Wpłać na cel: <br><span id="depositGoalName" style="color: var(--primary);"></span></h2>
+            <button class="close-btn" type="button" data-modal-close="goalDepositModal">&times;</button>
+        </div>
+        <form action="/add-money" method="POST">
+            <input type="hidden" name="goal_id" id="depositGoalId">
+            <div class="form-group">
+                <label style="font-size: 13px; color: var(--text-variant);">Kwota do wpłaty z Salda Wolnego (PLN)</label>
+                <input type="number" step="0.01" name="amount" placeholder="np. 50.00" required>
+            </div>
+            <button type="submit" class="btn-primary" style="width: 100%; margin-top: 16px;">Przelej środki</button>
+        </form>
+    </div>
+</div>
