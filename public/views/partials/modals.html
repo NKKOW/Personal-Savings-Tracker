@@ -1,15 +1,31 @@
 <div id="balanceModal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
-            <h2>Zasil konto główne</h2>
+            <h2>Zasil Dostępne Środki</h2>
             <button class="close-btn" type="button" data-modal-close="balanceModal">&times;</button>
         </div>
         <form action="/update-balance" method="POST">
             <div class="form-group">
-                <label style="font-size: 13px; color: var(--text-variant);">Kwota (PLN)</label>
+                <label style="font-size: 13px; color: var(--text-variant);">Kwota wpłaty (PLN)</label>
                 <input type="number" step="0.01" name="amount" placeholder="np. 500.00" required>
             </div>
             <button type="submit" class="btn-primary" style="width: 100%; margin-top: 16px;">Zatwierdź wpłatę</button>
+        </form>
+    </div>
+</div>
+
+<div id="withdrawBalanceModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Wypłać Środki</h2>
+            <button class="close-btn" type="button" data-modal-close="withdrawBalanceModal">&times;</button>
+        </div>
+        <form action="/withdraw-balance" method="POST">
+            <div class="form-group">
+                <label style="font-size: 13px; color: var(--text-variant);">Kwota do wypłaty (PLN)</label>
+                <input type="number" step="0.01" name="amount" placeholder="np. 100.00" required>
+            </div>
+            <button type="submit" class="btn-primary" style="width: 100%; margin-top: 16px; background-color: #d32f2f;">Zatwierdź wypłatę</button>
         </form>
     </div>
 </div>
@@ -48,16 +64,49 @@
 <div id="goalDepositModal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
-            <h2>Wpłać na cel: <br><span id="depositGoalName" style="color: var(--primary);"></span></h2>
+            <h2>Wpłać na: <br><span class="goal-name-display" style="color: var(--primary);"></span></h2>
             <button class="close-btn" type="button" data-modal-close="goalDepositModal">&times;</button>
         </div>
         <form action="/add-money" method="POST">
-            <input type="hidden" name="goal_id" id="depositGoalId">
+            <input type="hidden" name="goal_id">
             <div class="form-group">
-                <label style="font-size: 13px; color: var(--text-variant);">Kwota do wpłaty z Salda Wolnego (PLN)</label>
+                <label style="font-size: 13px; color: var(--text-variant);">Kwota z Dostępnych Środków (PLN)</label>
                 <input type="number" step="0.01" name="amount" placeholder="np. 50.00" required>
             </div>
             <button type="submit" class="btn-primary" style="width: 100%; margin-top: 16px;">Przelej środki</button>
+        </form>
+    </div>
+</div>
+
+<div id="spendGoalModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Wydaj pieniądze z: <br><span class="goal-name-display" style="color: #d32f2f;"></span></h2>
+            <button class="close-btn" type="button" data-modal-close="spendGoalModal">&times;</button>
+        </div>
+        <form action="/spend-money" method="POST">
+            <input type="hidden" name="goal_id">
+            <div class="form-group">
+                <label style="font-size: 13px; color: var(--text-variant);">Wydana kwota (PLN)</label>
+                <input type="number" step="0.01" name="amount" placeholder="np. 35.00" required>
+            </div>
+            <button type="submit" class="btn-primary" style="width: 100%; margin-top: 16px; background-color: #d32f2f;">Zatwierdź wydatek</button>
+        </form>
+    </div>
+</div>
+
+<div id="deleteGoalModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Usuń cel: <br><span class="goal-name-display" style="color: var(--text-main);"></span></h2>
+            <button class="close-btn" type="button" data-modal-close="deleteGoalModal">&times;</button>
+        </div>
+        <form action="/delete-goal" method="POST">
+            <input type="hidden" name="goal_id">
+            <p style="font-size: 14px; color: var(--text-variant); margin-bottom: 20px;">
+                Czy na pewno chcesz usunąć ten cel? Odłożone środki zostaną automatycznie zwrócone do Twoich Dostępnych Środków.
+            </p>
+            <button type="submit" class="btn-primary" style="width: 100%; background-color: #d32f2f;">Usuń cel i zwróć środki</button>
         </form>
     </div>
 </div>

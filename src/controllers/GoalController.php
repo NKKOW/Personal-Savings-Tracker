@@ -4,8 +4,8 @@ require_once __DIR__ . '/../repositories/GoalsRepository.php';
 require_once __DIR__ . '/../repositories/UsersRepository.php';
 
 class GoalController extends AppController {
-    private $goalsRepository;
-    private $usersRepository;
+    private GoalsRepository $goalsRepository;
+    private UsersRepository $usersRepository;
 
     public function __construct() {
         parent::__construct();
@@ -53,8 +53,48 @@ class GoalController extends AppController {
         $userId = $_SESSION['user_id'];
         $amount = (float)($_POST['amount'] ?? 0);
 
-        if ($amount != 0) {
+        if ($amount > 0) {
             $this->usersRepository->updateBalance($userId, $amount);
+        }
+
+        $this->redirect('dashboard');
+    }
+
+    public function withdrawBalance() {
+        if (!$this->isLoggedIn() || !$this->isPost()) return;
+
+        $userId = $_SESSION['user_id'];
+        $amount = (float)($_POST['amount'] ?? 0);
+
+        if ($amount > 0) {
+            $this->usersRepository->updateBalance($userId, -$amount);
+        }
+
+        $this->redirect('dashboard');
+    }
+
+    public function deleteGoal() {
+        if (!$this->isLoggedIn() || !$this->isPost()) return;
+
+        $userId = $_SESSION['user_id'];
+        $goalId = (int)($_POST['goal_id'] ?? 0);
+
+        if ($goalId > 0) {
+            $this->goalsRepository->deleteGoal($userId, $goalId);
+        }
+
+        $this->redirect('dashboard');
+    }
+
+    public function spendMoney() {
+        if (!$this->isLoggedIn() || !$this->isPost()) return;
+
+        $userId = $_SESSION['user_id'];
+        $goalId = (int)($_POST['goal_id'] ?? 0);
+        $amount = (float)($_POST['amount'] ?? 0);
+
+        if ($goalId > 0 && $amount > 0) {
+            $this->goalsRepository->spendFromGoal($userId, $goalId, $amount);
         }
 
         $this->redirect('dashboard');

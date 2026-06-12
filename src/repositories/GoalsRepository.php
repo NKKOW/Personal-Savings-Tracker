@@ -43,4 +43,44 @@ class GoalsRepository extends Repository {
             return false;
         }
     }
+
+    public function deleteGoal(int $userId, int $goalId): bool {
+        $pdo = $this->database->connect();
+
+        try {
+            $pdo->beginTransaction();
+
+            $stmt1 = $pdo->prepare('SELECT current_amount FROM goals WHERE id = :goal_id AND user_id = :user_id');
+            $stmt1->execute(['goal_id' => $goalId, 'user_id' => $userId]);
+            $goal = $stmt1->fetch(PDO::FETCH_ASSOC);
+
+            if ($goal) {
+                $stmt2 = $pdo->prepare('UPDATE users SET balance = balance + :amount WHERE id = :user_id');
+                $stmt2->execute(['amount' => $goal['current_amount'], 'user_id' => $userId]);
+
+                $stmt3 = $pdo->prepare('DELETE FROM goals WHERE id = :goal_id AND user_id = :user_id');
+                $stmt3->execute(['goal_id' => $goalId, 'user_id' => $userId]);
+            }
+
+            $pdo->commit();
+            return true;
+        } catch (PDOException $e) {
+            $pdo->rollBack();
+            return false;
+        }
+    }
+
+    public function spendFromGoal(int $userId, int $goalId, float $amount): bool {
+        try {
+            $stmt = $this->database->connect()->prepare('
+                UPDATE goals SET current_amount = current_amount - :amount
+                WHERE id = :goal_id AND user_id = :user_id AND current_amount >= :amount
+            ');
+            $stmt->execute(['amount' => $amount, 'goal_id' => $goalId, 'user_id' => $userId]);
+            
+            return $stmt->rowCount() > 0;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
 }

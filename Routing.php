@@ -14,9 +14,14 @@ class Routing {
         "admin" => ["controller" => "AdminController", "action" => "index"],
         "search" => ["controller" => "UsersController", "action" => "search"],
         "delete-user" => ["controller" => "UsersController", "action" => "delete"],
+        
         "add-goal" => ["controller" => "GoalController", "action" => "addGoal"],
         "add-money" => ["controller" => "GoalController", "action" => "addMoney"],
         "update-balance" => ["controller" => "GoalController", "action" => "updateBalance"],
+        "withdraw-balance" => ["controller" => "GoalController", "action" => "withdrawBalance"],
+        "delete-goal" => ["controller" => "GoalController", "action" => "deleteGoal"],
+        "spend-money" => ["controller" => "GoalController", "action" => "spendMoney"],
+        
         "" => ["controller" => "SecurityController", "action" => "login"]
     ];
 
@@ -33,5 +38,3 @@ class Routing {
         }
     }
 }
-
-

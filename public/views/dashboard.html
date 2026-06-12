@@ -12,19 +12,25 @@
 
     <div class="container">
         <main class="index-main dashboard-container">
-            <section style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; padding: 32px; background: var(--surface); border-radius: 12px; border: 1px solid var(--outline-variant); box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+            
+            <section class="balance-section">
                 <div>
-                    <p style="font-size: 12px; font-weight: 600; color: var(--text-variant); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px;">Dostępne środki (wolne)</p>
-                    <h2 style="font-size: 36px; font-weight: 700; color: var(--text-main); margin: 0;"><?= $freeBalance ?> PLN</h2>
-                    <p style="font-size: 13px; color: var(--text-variant); margin-top: 8px;">Saldo ogólne (wraz z celami): <strong><?= $totalBalance ?> PLN</strong></p>
+                    <p class="balance-label">Dostępne środki (wolne)</p>
+                    <h2 class="balance-amount"><?= $freeBalance ?> PLN</h2>
+                    <p class="balance-total">Saldo ogólne (wraz z celami): <strong><?= $totalBalance ?> PLN</strong></p>
                 </div>
-                <button type="button" data-modal-target="balanceModal" class="btn-primary btn-icon">
-                    <span class="material-symbols-outlined" style="font-size: 20px;">add</span> Wpłać na konto
-                </button>
+                <div class="balance-buttons">
+                    <button type="button" data-modal-target="balanceModal" class="btn-primary btn-icon">
+                        <span class="material-symbols-outlined" style="font-size: 20px;">add</span> Wpłać
+                    </button>
+                    <button type="button" data-modal-target="withdrawBalanceModal" class="btn-primary btn-icon btn-outline">
+                        <span class="material-symbols-outlined" style="font-size: 20px;">remove</span> Wypłać
+                    </button>
+                </div>
             </section>
 
             <section>
-                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--outline-variant); padding-bottom: 12px;">
+                <div class="goals-header-section">
                     <h2 style="font-size: 24px; margin: 0;">Twoje Cele</h2>
                     <button type="button" data-modal-target="addGoalModal" class="btn-primary btn-icon">
                         <span class="material-symbols-outlined" style="font-size: 20px;">add</span> Nowy Cel
@@ -64,9 +70,17 @@
                                     <div style="height: 38px;"></div> 
                                 <?php endif; ?>
 
-                                <button type="button" data-modal-target="goalDepositModal" data-goal-id="<?= $goal['id'] ?>" data-goal-name="<?= htmlspecialchars($goal['title']) ?>" class="btn-primary btn-icon btn-small" style="background: var(--surface); color: var(--text-main); border: 1px solid var(--outline-variant);">
-                                    <span class="material-symbols-outlined" style="font-size: 16px;">add</span> Wpłać
-                                </button>
+                                <div class="goal-actions">
+                                    <button type="button" data-modal-target="goalDepositModal" data-goal-id="<?= $goal['id'] ?>" data-goal-name="<?= htmlspecialchars($goal['title']) ?>" class="btn-primary btn-icon btn-small btn-outline" style="flex: 1;">
+                                        <span class="material-symbols-outlined" style="font-size: 16px;">add</span> Wpłać
+                                    </button>
+                                    <button type="button" data-modal-target="spendGoalModal" data-goal-id="<?= $goal['id'] ?>" data-goal-name="<?= htmlspecialchars($goal['title']) ?>" class="btn-primary btn-icon btn-small btn-outline" style="flex: 1;">
+                                        <span class="material-symbols-outlined" style="font-size: 16px;">shopping_cart</span> Wydaj
+                                    </button>
+                                    <button type="button" data-modal-target="deleteGoalModal" data-goal-id="<?= $goal['id'] ?>" data-goal-name="<?= htmlspecialchars($goal['title']) ?>" class="btn-primary btn-icon btn-small" style="background: var(--surface); color: #d32f2f; border: 1px solid #ffcdd2; flex: 0.5;">
+                                        <span class="material-symbols-outlined" style="font-size: 16px; margin: 0;">delete</span>
+                                    </button>
+                                </div>
                             </article>
                         <?php endforeach; ?>
                     <?php endif; ?>

@@ -8,9 +8,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const modalId = trigger.getAttribute('data-modal-target');
             const modal = document.getElementById(modalId);
             
-            if (modalId === 'goalDepositModal') {
-                document.getElementById('depositGoalId').value = trigger.getAttribute('data-goal-id');
-                document.getElementById('depositGoalName').innerText = trigger.getAttribute('data-goal-name');
+            if (['goalDepositModal', 'spendGoalModal', 'deleteGoalModal'].includes(modalId)) {
+                const idInput = modal.querySelector('input[name="goal_id"]');
+                const nameDisplay = modal.querySelector('.goal-name-display');
+                
+                if (idInput) idInput.value = trigger.getAttribute('data-goal-id');
+                if (nameDisplay) nameDisplay.innerText = trigger.getAttribute('data-goal-name');
             }
             
             if (modal) modal.style.display = 'flex';
